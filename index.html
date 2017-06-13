@@ -11,10 +11,10 @@
 
 <body>
 	<div class="container">
-		<div align="right">Signed in as: Placeholder
+		<div align="right" id="userID">Signed in as: Placeholder
 		</div>
 
-		<div class="jumbotron">
+		<div class="jumbotron" id="page-header">
 			<h1 align="center">Commuter</h1><br>
 			<h3 align="center">Find the most time or cost-efficient way to get to your destination</h3>
 		</div>
@@ -22,7 +22,7 @@
 		<div class="row">
 			<div class="col-md-6">
 				<div class="panel panel-default">
-					<div class="panel-heading">Origin</div><br>
+					<div class="panel-heading"><h5>Origin</h5></div><br>
 					
 					<div class="panel-body">
 						<div class="input-group">
@@ -33,46 +33,46 @@
 						</div>
 						<br>
 						<br>
-					<a href="#">Use Current Location</a>
+					<a href="#" id="userLocation">Use Current Location</a>
 					</div>
 				</div>
 			</div>
 			
 			<div class="col-md-6">
-				<h2>Destination</h2><br>
-				<div class="input-group">
-					<input id="destinationStreet-input" type="text" placeholder="Street Address"><br>
-					<input id="destinationCity-input" type="text" placeholder="City">
-					<input id="destinationState-input" type="text" placeholder="State">
-					<input id="destinationZIP-input" type="text" placeholder="ZIP Code">
+				<div class="panel panel-default">
+					<div class="panel-heading"><h5>Destination</h5></div><br>
+					
+					<div class="panel-body">
+						<div class="input-group">
+							<input id="destinationStreet-input" type="text" placeholder="Street Address"><br>
+							<input id="destinationCity-input" type="text" placeholder="City">
+							<input id="destinationState-input" type="text" placeholder="State">
+							<input id="destinationZIP-input" type="text" placeholder="ZIP Code">
+						</div>
+					
+						<br>
+						<button class="btn btn-default" type="submit" id="submitButton">Submit</button>
+					</div>
 				</div>
-				
-				<br>
-				<button class="btn btn-default" type="submit">Submit</button>
 			</div>
 		</div>
 
 		<div class="row">
-			<div class="col-md-6">
-				<div class="panel panel-default">
-					<div class="panel-heading">Previous Origins</div>
-
-					<div class="panel-body">
-					</div>
-				</div>
+			<div class="col-md-6" id="prevOrigins">
+				<h5>Previous Origins</h5><br>
 			</div>
 
-			<div class="col-md-6">
-				<h2>Previous Destinations</h2><br>
+			<div class="col-md-6" id="prevDestinations">
+				<h5>Previous Destinations</h5><br>
 			</div>
 		</div>
 		
 		<div class="row">
 			<div class="col-md-6">
-				<div id="fastestOption">
+				<div id="fastestOption" id="fOption">
 				</div>
 
-				<div id="cheapestOption">
+				<div id="cheapestOption" id="cOptions">
 				</div>
 			</div>
 
