@@ -78,17 +78,14 @@ $("#submitButton").on("click", function(){
 	var zipDestination = $("#destinationZIP-input").val().trim();
 	// assign origin address to an "origin" object
 	var origin = {
-		street: streetOrigin,
-		city: cityOrigin,
-		state: stateOrigin,
-		zip: zipOrigin
-	};
-	// assign destination address to an "destination" object
-	var destination = {
-		street: streetDestination,
-		city: cityDestination,
-		state: stateDestination,
-		zip: zipDestination,
+		streetOrigin: streetOrigin,
+		cityOrigin: cityOrigin,
+		stateOrigin: stateOrigin,
+		zipOrigin: zipOrigin,
+		streetDestination: streetDestination,
+		cityDestination: cityDestination,
+		stateDestination: stateDestination,
+		zipDestination: zipDestination,
 	};
 	//push objects to firebase database
   	database.ref().push(origin);
@@ -101,19 +98,61 @@ database.ref().on("child_added", function(childSnapshot, prevChildKey) {
 	// prevent default
 	console.log(childSnapshot.val());
 	// Store everything into a variable.
-	var streetOrigin = childSnapshot.val().origin.street;
-	var cityOrigin = childSnapshot.val().origin.city;
-	var stateOrigin = childSnapshot.val().state.street;
-	var zipOrigin = childSnapshot.val().origin.zip;
-	var streetDestination = childSnapshot.val().destination.street;
-	var cityDestination = childSnapshot.val().destination.city;
-	var stateDestination = childSnapshot.val().destination.state;
-	var zipDestination = childSnapshot.val().destination.zip;
+	var streetOrigin = childSnapshot.val().streetOrigin;
+	var cityOrigin = childSnapshot.val().cityOrigin;
+	var stateOrigin = childSnapshot.val().stateOrigin;
+	var zipOrigin = childSnapshot.val().zipOrigin;
+	var streetDestination = childSnapshot.val().streetDestination;
+	var cityDestination = childSnapshot.val().cityDestination;
+	var stateDestination = childSnapshot.val().stateDestination;
+	var zipDestination = childSnapshot.val().zipDestination;
 	
 	// Add addresses to the respective "Previous ____" div
 	$("#prevOrigins").append("<p>" + streetOrigin + "</p><p>" + cityOrigin + "<p>" + stateOrigin + "</p><p>" + zipOrigin + "</p><br>");
 	$("#prevDestinations").append("<p>" + streetDestination + "</p><p>" + cityDestination + "<p>" + stateDestination + "</p><p>" + zipDestination + "</p><br>");
 });
+
+// 3 functions below get user's location
+var queryURL = "https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyAPcxvzzVjsR9zzeLUTBhV87D-a9OER6HQ";
+
+function getLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition)
+    }
+}
+
+function showPosition(position) {
+    var userLat = position.coords.latitude;
+    var userLng = position.coords.longitude;
+    var queryURL = "https://maps.googleapis.com/maps/api/geocode/json?latlng="+userLat+","+userLng+"&key=AIzaSyAPcxvzzVjsR9zzeLUTBhV87D-a9OER6HQ"
+    	$.ajax({
+			url:queryURL,
+			method:'GET'
+		}).done(function(response) {
+			console.log(response.results[0].address_components);
+			var userCurrentStreet = response.results[0].address_components[0].long_name + " " + response.results[0].address_components[1].long_name;
+			console.log(userCurrentStreet);
+
+			var userCurrentCity = response.results[0].address_components[3].long_name;
+			console.log(userCurrentCity);
+
+			var userCurrentState = response.results[0].address_components[5].short_name;
+			console.log(userCurrentState);
+
+			var userCurrentZIP = response.results[0].address_components[7].long_name;
+			console.log(userCurrentZIP);
+
+			$("#originStreet-input").attr("value", userCurrentStreet);
+			$("#originCity-input").attr("value", userCurrentCity);
+			$("#originState-input").attr("value", userCurrentState);
+			$("#originZIP-input").attr("value", userCurrentZIP);
+
+
+
+		});
+}
+
+$("#userLocation").on("click", getLocation);
 
 // function to use
 // $("#useThisAddress").on("click", function(){
