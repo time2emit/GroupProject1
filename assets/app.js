@@ -77,7 +77,7 @@ $("#submitButton").on("click", function(){
 	var stateDestination = $("#destinationState-input").val().trim();
 	var zipDestination = $("#destinationZIP-input").val().trim();
 	// assign origin address to an "origin" object
-	var origin = {
+	var navInfo = {
 		streetOrigin: streetOrigin,
 		cityOrigin: cityOrigin,
 		stateOrigin: stateOrigin,
@@ -88,8 +88,8 @@ $("#submitButton").on("click", function(){
 		zipDestination: zipDestination,
 	};
 	//push objects to firebase database
-  	database.ref().push(origin);
-  	database.ref().push(destination);
+  	database.ref().push(navInfo);
+  	
 
 });
 
@@ -106,10 +106,13 @@ database.ref().on("child_added", function(childSnapshot, prevChildKey) {
 	var cityDestination = childSnapshot.val().cityDestination;
 	var stateDestination = childSnapshot.val().stateDestination;
 	var zipDestination = childSnapshot.val().zipDestination;
+
+	var neatOrigin = streetOrigin + ", " + cityOrigin + ", " + stateOrigin + ", " + zipOrigin;
+	var neatDestination = streetDestination + ", " + cityDestination + ", " + stateDestination + ", " + zipDestination;
 	
 	// Add addresses to the respective "Previous ____" div
-	$("#prevOrigins").append("<p>" + streetOrigin + "</p><p>" + cityOrigin + "<p>" + stateOrigin + "</p><p>" + zipOrigin + "</p><br>");
-	$("#prevDestinations").append("<p>" + streetDestination + "</p><p>" + cityDestination + "<p>" + stateDestination + "</p><p>" + zipDestination + "</p><br>");
+	$("#prevOrigins").append("<div class='panel panel-default'><div class='panel-body'>"+neatOrigin+"</div></div>");
+	$("#prevDestinations").append("<div class='panel panel-default'><div class='panel-body'>"+neatDestination+"</div></div>");
 });
 
 // 3 functions below get user's location
@@ -151,6 +154,19 @@ function showPosition(position) {
 
 		});
 }
+
+//BART API
+var userkeyBart = "MW9S-E7SL-26DU-VV8V";
+
+var queryURL = "http://api.bart.gov/api/sched.aspx?cmd=routesched&route=6&key=" + userkeyBart + "&date=sa&json=y";
+
+		$.ajax({
+			url: queryURL,
+			method: 'GET'
+			}).done(function(response){
+				console.log(queryURL);
+
+		});
 
 $("#userLocation").on("click", getLocation);
 
