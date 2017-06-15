@@ -111,55 +111,57 @@
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAPcxvzzVjsR9zzeLUTBhV87D-a9OER6HQ"
     async defer></script>
 <script>
-//var queryURL = "https://maps.googleapis.com/maps/api/geocode/json?latlng=40.714224,-73.961452&key=AIzaSyAPcxvzzVjsR9zzeLUTBhV87D-a9OER6HQ"
-var queryURL = "https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyAPcxvzzVjsR9zzeLUTBhV87D-a9OER6HQ";
 
-function getLocation() {
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(showPosition)
-    }
-}
+// Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyC213GJibSJGz-RH9Eo2Gk6OaeZLCbkQKI",
+    authDomain: "commuter-570b0.firebaseapp.com",
+    databaseURL: "https://commuter-570b0.firebaseio.com",
+    projectId: "commuter-570b0",
+    storageBucket: "commuter-570b0.appspot.com",
+    messagingSenderId: "554554260832"
+  };
 
-function showPosition(position) {
-    var userLat = position.coords.latitude;
-    var userLng = position.coords.longitude;
-    var queryURL = "https://maps.googleapis.com/maps/api/geocode/json?latlng="+userLat+","+userLng+"&key=AIzaSyAPcxvzzVjsR9zzeLUTBhV87D-a9OER6HQ"
-    	$.ajax({
-			url:queryURL,
-			method:'GET'
-		}).done(function(response) {
-			console.log(response.results[0].address_components);
-			var userCurrentStreet = response.results[0].address_components[0].long_name + " " + response.results[0].address_components[1].long_name;
-			console.log(userCurrentStreet);
+  firebase.initializeApp(config);
 
-			var userCurrentCity = response.results[0].address_components[3].long_name;
-			console.log(userCurrentCity);
+// Get user's location and fill in text boxes with the street address
+	function getLocation() {
+	    if (navigator.geolocation) {
+	        navigator.geolocation.getCurrentPosition(showPosition)
+	    }
+	}
 
-			var userCurrentState = response.results[0].address_components[5].short_name;
-			console.log(userCurrentState);
+	function showPosition(position) {
+	    var userLat = position.coords.latitude;
+	    var userLng = position.coords.longitude;
+	    var queryURL = "https://maps.googleapis.com/maps/api/geocode/json?latlng="+userLat+","+userLng+"&key=AIzaSyAPcxvzzVjsR9zzeLUTBhV87D-a9OER6HQ"
+	    	$.ajax({
+				url:queryURL,
+				method:'GET'
+			}).done(function(response) {
+				console.log(response.results[0].address_components);
+				var userCurrentStreet = response.results[0].address_components[0].long_name + " " + response.results[0].address_components[1].long_name;
+				console.log(userCurrentStreet);
 
-			var userCurrentZIP = response.results[0].address_components[7].long_name;
-			console.log(userCurrentZIP);
+				var userCurrentCity = response.results[0].address_components[3].long_name;
+				console.log(userCurrentCity);
 
-			$("#originStreet-input").attr("value", userCurrentStreet);
-			$("#originCity-input").attr("value", userCurrentCity);
-			$("#originState-input").attr("value", userCurrentState);
-			$("#originZIP-input").attr("value", userCurrentZIP);
+				var userCurrentState = response.results[0].address_components[5].short_name;
+				console.log(userCurrentState);
+
+				var userCurrentZIP = response.results[0].address_components[7].long_name;
+				console.log(userCurrentZIP);
+
+				$("#originStreet-input").attr("value", userCurrentStreet);
+				$("#originCity-input").attr("value", userCurrentCity);
+				$("#originState-input").attr("value", userCurrentState);
+				$("#originZIP-input").attr("value", userCurrentZIP);
 
 
 
-		});
-}
-
-$("#userLocation").on("click", getLocation);
-
-//$("#userLocation").on("click", function(){
-	//$.ajax({
-		//url:queryURL,
-		//method:'GET'
-	//}).done(function(response) {
-		//console.log(response);
-	//});
+			});
+	}
+	$("#userLocation").on("click", getLocation);
 
 	
 	
