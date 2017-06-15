@@ -78,17 +78,17 @@ $("#submitButton").on("click", function(){
 	var zipDestination = $("#destinationZIP-input").val().trim();
 	// assign origin address to an "origin" object
 	var origin = {
-		street: streetOrigin;
-		city: cityOrigin;
-		state: stateOrigin;
-		zip: zipOrigin;
+		street: streetOrigin,
+		city: cityOrigin,
+		state: stateOrigin,
+		zip: zipOrigin
 	};
 	// assign destination address to an "destination" object
 	var destination = {
-		street: streetDestination;
-		city: cityDestination;
-		state: stateDestination;
-		zip: zipDestination;
+		street: streetDestination,
+		city: cityDestination,
+		state: stateDestination,
+		zip: zipDestination,
 	};
 	//push objects to firebase database
   	database.ref().push(origin);
@@ -116,36 +116,36 @@ database.ref().on("child_added", function(childSnapshot, prevChildKey) {
 });
 
 // function to use
-$("#useThisAddress").on("click", function(){
-	// prevent default
-	event.preventDefault();
+// $("#useThisAddress").on("click", function(){
+// 	// prevent default
+// 	event.preventDefault();
 
-	var streetOrigin = $("#originStreet-input").val().trim();
-	var cityOrigin = $("#originCity-input").val().trim();
-	var stateOrigin = $("#originState-input").val().trim();
-	var zipOrigin = $("#originZIP-input").val().trim();
-	var streetDestination = $("#destinationState-input").val().trim();
-	var cityDestination = $("#destinationCity-input").val().trim();
-	var stateDestination = $("#destinationState-input").val().trim();
-	var zipDestination = $("#destinationZIP-input").val().trim();
+// 	var streetOrigin = $("#originStreet-input").val().trim();
+// 	var cityOrigin = $("#originCity-input").val().trim();
+// 	var stateOrigin = $("#originState-input").val().trim();
+// 	var zipOrigin = $("#originZIP-input").val().trim();
+// 	var streetDestination = $("#destinationState-input").val().trim();
+// 	var cityDestination = $("#destinationCity-input").val().trim();
+// 	var stateDestination = $("#destinationState-input").val().trim();
+// 	var zipDestination = $("#destinationZIP-input").val().trim();
 
-	var origin = {
-		street: streetOrigin;
-		city: cityOrigin;
-		state: stateOrigin;
-		zip: zipOrigin;
-	};
+// 	var origin = {
+// 		street: streetOrigin;
+// 		city: cityOrigin;
+// 		state: stateOrigin;
+// 		zip: zipOrigin;
+// 	};
 
-	var destination = {
-		street: streetDestination;
-		city: cityDestination;
-		state: stateDestination;
-		zip: zipDestination;
-	};
+// 	var destination = {
+// 		street: streetDestination;
+// 		city: cityDestination;
+// 		state: stateDestination;
+// 		zip: zipDestination;
+// 	};
 
-  	database.ref().push(origin);
-  	database.ref().push(destination);
+//   	database.ref().push(origin);
+//   	database.ref().push(destination);
 
-});
+// });
 
 // </script>
