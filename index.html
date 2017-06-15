@@ -9,6 +9,9 @@
 	
 	<!--Reset.css-->
 	<link rel="stylesheet" type="text/css" href="assets/reset.css">
+
+	<!--Call jQuery-->
+	<script src="https://code.jquery.com/jquery-3.2.1.js"</script>
 	
 	<!--Call to Bootstrap with Bootswatch Layout-->
 	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -104,8 +107,64 @@
 		</div>
 	</div>
 
-<!--Call to jQuery-->
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAPcxvzzVjsR9zzeLUTBhV87D-a9OER6HQ"
+    async defer></script>
+<script>
+//var queryURL = "https://maps.googleapis.com/maps/api/geocode/json?latlng=40.714224,-73.961452&key=AIzaSyAPcxvzzVjsR9zzeLUTBhV87D-a9OER6HQ"
+var queryURL = "https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyAPcxvzzVjsR9zzeLUTBhV87D-a9OER6HQ";
+
+function getLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition)
+    }
+}
+
+function showPosition(position) {
+    var userLat = position.coords.latitude;
+    var userLng = position.coords.longitude;
+    var queryURL = "https://maps.googleapis.com/maps/api/geocode/json?latlng="+userLat+","+userLng+"&key=AIzaSyAPcxvzzVjsR9zzeLUTBhV87D-a9OER6HQ"
+    	$.ajax({
+			url:queryURL,
+			method:'GET'
+		}).done(function(response) {
+			console.log(response.results[0].address_components);
+			var userCurrentStreet = response.results[0].address_components[0].long_name + " " + response.results[0].address_components[1].long_name;
+			console.log(userCurrentStreet);
+
+			var userCurrentCity = response.results[0].address_components[3].long_name;
+			console.log(userCurrentCity);
+
+			var userCurrentState = response.results[0].address_components[5].short_name;
+			console.log(userCurrentState);
+
+			var userCurrentZIP = response.results[0].address_components[7].long_name;
+			console.log(userCurrentZIP);
+
+			$("#originStreet-input").attr("value", userCurrentStreet);
+			$("#originCity-input").attr("value", userCurrentCity);
+			$("#originState-input").attr("value", userCurrentState);
+			$("#originZIP-input").attr("value", userCurrentZIP);
+
+
+
+		});
+}
+
+$("#userLocation").on("click", getLocation);
+
+//$("#userLocation").on("click", function(){
+	//$.ajax({
+		//url:queryURL,
+		//method:'GET'
+	//}).done(function(response) {
+		//console.log(response);
+	//});
+
+	
+	
+
+</script>
 
 </body>
 </html>
