@@ -72,7 +72,7 @@ $("#submitButton").on("click", function(){
 	var cityOrigin = $("#originCity-input").val().trim();
 	var stateOrigin = $("#originState-input").val().trim();
 	var zipOrigin = $("#originZIP-input").val().trim();
-	var streetDestination = $("#destinationState-input").val().trim();
+	var streetDestination = $("#destinationStreet-input").val().trim();
 	var cityDestination = $("#destinationCity-input").val().trim();
 	var stateDestination = $("#destinationState-input").val().trim();
 	var zipDestination = $("#destinationZIP-input").val().trim();
@@ -82,6 +82,7 @@ $("#submitButton").on("click", function(){
 		cityOrigin: cityOrigin,
 		stateOrigin: stateOrigin,
 		zipOrigin: zipOrigin,
+
 		streetDestination: streetDestination,
 		cityDestination: cityDestination,
 		stateDestination: stateDestination,
@@ -102,6 +103,7 @@ database.ref().on("child_added", function(childSnapshot, prevChildKey) {
 	var cityOrigin = childSnapshot.val().cityOrigin;
 	var stateOrigin = childSnapshot.val().stateOrigin;
 	var zipOrigin = childSnapshot.val().zipOrigin;
+
 	var streetDestination = childSnapshot.val().streetDestination;
 	var cityDestination = childSnapshot.val().cityDestination;
 	var stateDestination = childSnapshot.val().stateDestination;
